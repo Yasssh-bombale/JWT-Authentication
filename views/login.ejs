@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Login</title>
   </head>
   <body>
@@ -13,13 +14,15 @@
         name="email"
         value="<%= locals.email %>"
         placeholder="enter your email"
+        required
       />
       <input
         type="password"
         name="password"
         placeholder="enter your password"
+        required
       />
-
+      <p class="error"><%= locals.message1 %></p>
       <p class="error"><%= locals.message %></p>
       <input type="submit" value="login" />
     </form>

@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const bcrypt = require("bcrypt");
 
 // connedting mongoDB;
 mongoose
@@ -40,6 +41,7 @@ const app = express();
 
 app.set("view engine", "ejs");
 app.set("views", "./views");
+app.use(express.static("./assets"));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -74,11 +76,19 @@ app.get("/register", (req, res) => {
 app.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
   let user = await User.findOne({ email });
-  if (user) return res.redirect("/login");
+  if (user) {
+    return res.render("register", {
+      name,
+      password,
+      message: "Opps ! looks like user is already registered !",
+    });
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
   user = await User.create({
     name,
     email,
-    password,
+    password: hashedPassword,
   });
   return res.redirect("/login");
 });
@@ -86,12 +96,15 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (!user) return res.redirect("/register");
-  const isMatch = user.password === password;
+  if (!user)
+    return res.render("login", {
+      message: "User not exists kindly register first !",
+    });
+  const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch)
     return res.render("login", {
       email,
-      message: "Opps ! Wrong password chutiya !",
+      message: "Opps ! Wrong password !",
     });
 
   const token = jwt.sign({ _id: user._id }, "heyheyiamRoy");
