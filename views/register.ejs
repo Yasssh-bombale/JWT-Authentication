@@ -3,12 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
+
     <title>Register</title>
   </head>
   <body>
     <h2>Hey you are new , Register first to access Our amazing web !</h2>
-    <form action="/register" method="POST">
+    <form class="form-container" action="/register" method="POST">
       <input
         type="name"
         name="name"
@@ -25,7 +32,7 @@
         required
       />;
       <p class="error"><%= locals.message %></p>
-      <input type="submit" value="Sign up" />
+      <input class="btn" type="submit" value="Sign up" />
     </form>
   </body>
 </html>

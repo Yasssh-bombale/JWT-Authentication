@@ -1,3 +1,17 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+.form-container {
+  padding: 10px;
+  border: 1px solid black;
+  width: 351px;
+  height: 232px;
+  text-align: center;
+  margin: 100px auto 10px;
+}
 .error {
   color: #ff2929;
   margin-left: 60px;
